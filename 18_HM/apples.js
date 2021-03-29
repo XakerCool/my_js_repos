@@ -123,13 +123,13 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
         
         if(log.boxStatement(amount).substring(0, log.boxStatement(amount).indexOf("|") - 1) === "Кредитная коробка") {
-            content.append(img_credit_box);
+            content.append(img_credit_box());
         }
         if(log.boxStatement(amount).substring(0, log.boxStatement(amount).indexOf("|") - 1) === "Ящик пуст") {
-            content.append(img_empty_box);
+            content.append(img_empty_box());
         }
         if(log.boxStatement(amount).substring(0, log.boxStatement(amount).indexOf("|") - 1) === "Ящик полон") {
-            content.append(img_full_box);
+            content.append(img_full_box());
         }
     });
 
@@ -162,15 +162,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
     content.append(e("p", {}, "===================TEST===================="));
     content.append(log.logTransaction(-10));
     if(log.boxStatement(-10).substring(0, log.boxStatement(-10).indexOf("|") - 1) === "Кредитная коробка") {
-        content.append(img_credit_box);
+        content.append(img_credit_box());
     }
     content.append(log.logTransaction(0));
     if(log.boxStatement(0).substring(0, log.boxStatement(0).indexOf("|") - 1) === "Ящик пуст") {
-        content.append(img_empty_box);
+        content.append(img_empty_box());
     }
     content.append(log.logTransaction(10));
     if(log.boxStatement(10).substring(0, log.boxStatement(10).indexOf("|") - 1) === "Ящик полон") {
-        content.append(img_full_box);
+        content.append(img_full_box());
     }
 
 });
@@ -200,7 +200,7 @@ let p_container = e("p", {
     class: "p_container"
 });
 
-const img_full_box = e("img", {
+const img_full_box = () => e("img", {
     src: "full_box.png",
     style: {
         width: "200px",
@@ -209,7 +209,7 @@ const img_full_box = e("img", {
     }
 });
 
-const img_empty_box = e("img", {
+const img_empty_box = () => e("img", {
     src: "empty_box.png",
     style: {
         width: "200px",
@@ -218,7 +218,7 @@ const img_empty_box = e("img", {
     }
 });
 
-const img_credit_box = e("img", {
+const img_credit_box = () => e("img", {
     src: "credit_box.png",
     style: {
         width: "200px",
