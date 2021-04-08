@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory game by JS-202.2</title>
+
+  <link rel="stylesheet" href="style.css"></link>
+
+  <script src="../lib/lists.js"></script>
+  <script src="../lib/dom.js"></script>
+
+  <script src="ui.js"></script>
+  <script src="game.js"></script>
+  <script src="main.js"></script>
+</head>
+<body>
+  <div class="game" id="game">
+    <div class="game-state-placeholder"></div>
+  </div>
+
+  <div class="home" id="home">
+    <div class="game-state-placeholder"></div>
+
+    <div class="home__scores scores" id="scores">
+      <h2>Счет</h2>
+    </div>
+    
+    <div class="home__settings settings">
+      <h2>Настройки</h2>
+      <div class="field_size">
+          <h3>Размер поля</h3>
+          <label>
+            Строки: 
+            <input class="field_size__input" type="number" id="rows" min="2" max="4" value="2">
+          </label>
+          <label>
+            Столбцы: 
+            <input class="field_size__input" type="number" id="columns" min="2" max="4" value="2">
+          </label>
+      </div>
+      <div class="button-start" id="button-start">Начать игру</div>
+    </div>
+  </div>
+
+  <div class="game-state game-state_hidden" id="game-state">
+    <div class="game-timer" id="game-timer"></div>
+  </div>
+
+  <div class="button-pause game-state_hidden" id="button-pause"></div>
+
+  <div class="win-block" id="win-block" style="display: none;">
+      <span id="congratulations">YOU WIN!</span>
+  </div>
+
+</body>
+</html>
