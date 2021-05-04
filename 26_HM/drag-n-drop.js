@@ -107,38 +107,59 @@ const drag = (event) => {
 
   const itemPadding = parseInt(getComputedStyle(currentItem).padding); //падинг
   const itemCords = {
-    right: currentItem.getBoundingClientRect().right, 
     left: currentItem.getBoundingClientRect().left,
-    top: currentItem.getBoundingClientRect().top,
-    bottom: currentItem.getBoundingClientRect().bottom
+    top: currentItem.getBoundingClientRect().top
   }; // просто корды
 
   let trueItemCords = { //корды с учётом падингов
-    right: itemCords.right - itemPadding, 
     left: itemCords.left + itemPadding,
     top: itemCords.top + itemPadding,
-    bottom: itemCords.bottom - itemPadding
   };
   let containerCords = { // корды контейнера
-    right: container.getBoundingClientRect().right,
-    left: container.getBoundingClientRect().left,
-    top: container.getBoundingClientRect().top,
-    bottom: container.getBoundingClientRect().bottom,
+    left: container.offsetLeft,
+    top: container.offsetTop,
   };
 
-  // console.log("right ", trueItemCords.right, containerCords.right);
-  // console.log("left ", trueItemCords.left, containerCords.left);
-  // console.log("top ", trueItemCords.top, containerCords.top);
-  // console.log("bottom ", trueItemCords.bottom, containerCords.bottom);
   
-  if(trueItemCords.right <= containerCords.right
-    & trueItemCords.left >= containerCords.left
-    & trueItemCords.top >= containerCords.top
-    & trueItemCords.bottom <= containerCords.bottom) {
+  // if(trueItemCords.left > containerCords.left
+  //   & (currentItem.clientWidth - itemPadding) + itemCords.left <= containerCords.left + container.clientWidth
+  //   & trueItemCords.top >= containerCords.top
+  //   & (currentItem.clientHeight - itemPadding) + itemCords.top <= containerCords.top + container.clientHeight) {
+  //   currentItem.style.transform = "translate(" + x + "px," + y + "px)";
+  // } else {
+  //   currentItem.style.transform = "translate(" + x - 10 + "px," + y - 10 + "px)";
+  // }
+
+  const combineHorizontAndVertical = () => {
+    if (y < containerCords.top - itemPadding) {
+      y = containerCords.top - itemPadding - 1;
+      currentItem.style.transform = "translate(" + x + "px," + y + "px)";
+    } else if (y + (currentItem.clientHeight - (itemPadding * 2)) > (containerCords.top + container.clientHeight) - itemPadding) {
+      y = (containerCords.top + container.clientHeight) - (currentItem.clientHeight - (itemPadding * 2)) - itemPadding - 1;
+      currentItem.style.transform = "translate(" + x + "px," + y + "px)";
+    } else {
+      currentItem.style.transform = "translate(" + x + "px," + y + "px)";
+    }
+  }
+
+  if (x < containerCords.left - itemPadding) {//левый край
+    x = containerCords.left - itemPadding + 1;
+    combineHorizontAndVertical();
+  } else if (x + (currentItem.clientWidth - (itemPadding * 2)) > (containerCords.left + container.clientWidth) - itemPadding) {//правый край
+    x = containerCords.left + itemPadding - 1;
+    combineHorizontAndVertical();
+  } else if (y < containerCords.top - itemPadding) {//верх
+    y = containerCords.top - itemPadding - 1;
+    currentItem.style.transform = "translate(" + x + "px," + y + "px)";
+  } else if (y + (currentItem.clientHeight - (itemPadding * 2)) > (containerCords.top + container.clientHeight) - itemPadding) {//низ
+    y = (containerCords.top + container.clientHeight) - (currentItem.clientHeight - (itemPadding * 2)) - itemPadding - 1;
+    currentItem.style.transform = "translate(" + x + "px," + y + "px)";
+  } else {
     currentItem.style.transform = "translate(" + x + "px," + y + "px)";
   }
 
   
+
 }
 
 const dragOver = (event) => {
